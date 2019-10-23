@@ -1,0 +1,69 @@
+<h1><span class="glyphicon glyphicon-user"></span> Customers</h1>
+<div class="header">
+    <button (click)="viewType(1)">Card View</button>
+    <button (click)="viewType(2)">List View</button>
+    <button (click)="viewType(3)">Map View</button>
+    <button [routerLink]="['/adduser']">New Customer</button>
+    <span>Filter<input type="text" autocomplete="filter" /></span>
+</div>
+
+<div class="container-fluid" *ngIf="displayType == 1">
+    <div class="row">
+        <div class="col-sm-3 content" *ngFor="let user of users | paginate: { itemsPerPage: 5, currentPage: p }">
+            <div class="card">
+                <div class="top">
+                    <h2 class="name">{{user.firstName}}</h2>
+                </div>
+                <div class="card-group ">
+                    <div class="card-body">
+                        <img class="card-img-top" *ngIf="user.gender=== 'Female'" src="../../assets/female.jpeg"
+                            alt="Female image">
+                        <img class="card-img-top" *ngIf="user.gender=== 'Male'" src="../../assets/manlogo.jpeg"
+                            alt="Male image">
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">{{user.city}}</p>
+                        <p class="card-text">{{user.state}} </p>
+                        <a class="view" style=" width:120px" (click)="vieworder(user.id)">View Orders</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+<div class="container-fluid" *ngIf="displayType == 2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> </th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Order Total</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let user of users">
+            <tr class="tabledata">
+                <td class="img">
+                    <img class=" card-img " *ngIf="user.gender==='Female' " src="../../assets/female.jpeg "
+                        alt="Female image ">
+                    <img class="card-img" *ngIf="user.gender==='Male' " src="../../assets/manlogo.jpeg "
+                        alt="Male image ">
+                </td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.address ? user.address : "----"}}</td>
+                <td>{{user.city}}</td>
+                <td>{{user.state}}</td>
+                <td>{{user.ordertotal}}</td>
+                <td>
+                    <a class="view" style=" width:120px" (click)="vieworder(user.id)">View Orders</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>`
